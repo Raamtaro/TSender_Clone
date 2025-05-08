@@ -18,9 +18,28 @@ const InputField: React.FC<InputFieldProps> = ({
   large = false,
   onChange,
 }) => {
-  const sizeClasses = large
-    ? 'text-lg px-4 py-3'
-    : 'text-base px-3 py-2'
+  // shared styles
+  const baseClasses = `
+    w-full
+    border border-gray-300 rounded
+    focus:outline-none focus:ring-2 focus:ring-blue-500
+  `.trim()
+
+  // choose size / element
+  if (large) {
+    return (
+      <div className="flex flex-col mb-4">
+        <label className="mb-1 font-medium text-gray-700">{label}</label>
+        <textarea
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          rows={6} // you can tweak number of rows…
+          className={`${baseClasses} text-lg p-4 h-32`} 
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col mb-4">
@@ -30,11 +49,7 @@ const InputField: React.FC<InputFieldProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`
-          border border-gray-300 rounded 
-          focus:outline-none focus:ring-2 focus:ring-blue-500
-          ${sizeClasses}
-        `}
+        className={`${baseClasses} text-base px-3 py-2`}
       />
     </div>
   )
